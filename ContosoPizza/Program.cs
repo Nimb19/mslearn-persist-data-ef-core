@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<PizzaContext>(options => 
     options.UseNpgsql(builder.Configuration["DbContext:ConnectionString"]));
 
-builder.Services.AddSqlite<PromotionsContext>();
+builder.Services.AddSqlite<PromotionsContext>("Data Source=.\\Promotions\\Promotions.db");
 
 builder.Services.AddScoped<PizzaService>();
 

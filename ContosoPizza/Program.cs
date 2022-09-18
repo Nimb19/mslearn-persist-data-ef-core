@@ -1,4 +1,7 @@
+using ContosoPizza.Data;
 using ContosoPizza.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 // Additional using declarations
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add the PizzaContext
+builder.Services.AddDbContext<PizzaContext>(options =>
+            options.UseNpgsql(builder.Configuration.GetConnectionString("BloggingContext")));
 
 // Add the PromotionsContext
 

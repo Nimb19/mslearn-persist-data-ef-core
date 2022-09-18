@@ -1,8 +1,7 @@
 using ContosoPizza.Data;
 using ContosoPizza.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-// Additional using declarations
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +9,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//var pgConnString = ;
 builder.Services.AddDbContext<PizzaContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("BloggingContext")));
+            options.UseNpgsql(new NpgsqlConnectionStringBuilder(builder.Configuration["DbContext:ConnectionString"])
+            {
+                IntegratedSecurity = false,
+                Username = builder.Configuration["DbContext:Login"],
+                Password = builder.Configuration["DbContext:Password"],
+            }.ToString()));
 
 // Add the PromotionsContext
 
